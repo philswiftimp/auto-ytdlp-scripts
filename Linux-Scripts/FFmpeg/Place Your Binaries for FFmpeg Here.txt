@@ -1,0 +1,1 @@
+Just place "ffmpeg" and "ffprobe" in this folder.

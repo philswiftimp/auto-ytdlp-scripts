@@ -1,0 +1,7 @@
+The folder should be named "bin".
+
+
+
+You can download FFmpeg Binaries from:
+
+https://www.ffmpeg.org/download.html
