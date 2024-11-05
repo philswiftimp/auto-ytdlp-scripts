@@ -28,14 +28,11 @@ echo Checking for FFmpeg...
 echo.
 
 if not exist "ffmpeg\bin\ffmpeg.exe" (
-    echo FFmpeg binary not found. Script CANNOT continue, as FFmpeg is REQUIRED to extract only the audio from the download! Script will exit!
+    echo FFmpeg binary not found. Script will continue without it, but you should download the binaries for remux support.
     echo.
 
     echo PLEASE PUT YOUR FFMPEG BINARIES INSIDE OF THE FFMPEG BIN FOLDER!!!!
     echo.
-
-    pause
-    exit
 )
 
 echo.
@@ -49,7 +46,6 @@ echo.
 
 if not exist "Downloads/" (
     echo Downloads folder does not exist, creating directory!
-
     echo.
     echo.
 
@@ -76,9 +72,14 @@ echo.
 
 set /p _url="Enter URL: "
 
-if exist "ffmpeg\bin\ffmpeg.exe" (
-    yt-dlp %_url% -f 251/bestaudio[abr=320] -P "Downloads/" --ffmpeg-location "ffmpeg\bin\ffmpeg.exe" -f bestvideo+bestaudio/best --extract-audio --audio-format mp3
+if not exist "ffmpeg\bin\ffmpeg.exe" (
+    yt-dlp %_url% -P "Downloads/" -f bestvideo[ext=webm]+bestaudio[ext=m4a]
 )
+
+if exist "ffmpeg\bin\ffmpeg.exe" (
+    yt-dlp %_url% -P "Downloads/" --ffmpeg-location "ffmpeg\bin\ffmpeg.exe" -f bestvideo[ext=webm]+bestaudio[ext=m4a] --remux-video "mp4"
+)
+
 
 echo.
 echo.
