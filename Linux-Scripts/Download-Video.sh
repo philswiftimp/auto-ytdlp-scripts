@@ -4,7 +4,20 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
-printf "${GREEN}Attempting to update yt-dlp...\n\n${NC}"
+#If yt-dlp_linux is not found, download using wget from the GitHub repository
+if [[ ! -e "yt-dlp_linux" ]]; then
+
+    printf "${RED}yt-dlp_linux not found! Downloading from repository at: 'https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp_linux'...\n\n\n${NC}"
+
+    sleep 2
+
+    wget "https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp_linux"
+
+    chmod +x "yt-dlp_linux"
+fi
+
+#Attempt to update yt-dlp via the included update parameter, it's easier on the eyes.
+printf "${GREEN}\nAttempting to update yt-dlp...\n\n${NC}"
 
 #Run YT-DLP's Executable With the Update Parameter
 ./yt-dlp_linux -U
