@@ -53,7 +53,7 @@ fi
 while true; do
 
 #Formatting
-echo -e "${NC}[ Download MP3 ]"
+echo -e "${NC}[ Download Highest Quality MP4 Video ]"
 printf "\n"
 
 #Enter your URL for Downloading
@@ -63,7 +63,7 @@ read -r _URL
 #Formatting
 printf "\n"
 
-./yt-dlp_linux $_URL -f 251/bestaudio[abr=320] -P "Downloads/" --ffmpeg-location "./FFmpeg/ffmpeg" --extract-audio --audio-format mp3
+./yt-dlp_linux $_URL -P "Downloads/" --ffmpeg-location "./FFmpeg/ffmpeg" -f bestvideo[ext=webm]+bestaudio[ext=m4a] --remux-video "mp4"
 
 #Formatting
 printf "\n"
