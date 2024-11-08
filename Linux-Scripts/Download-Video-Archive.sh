@@ -22,51 +22,63 @@ printf "${GREEN}\nAttempting to update yt-dlp...\n\n${NC}"
 #Run YT-DLP's Executable With the Update Parameter
 ./yt-dlp_linux -U
 
+#Formatting
+printf "\n${NC}"
+echo "--------------------------------------------"
+
 #Check if FFmpeg is in the right location
 printf "${GREEN}\nChecking for FFmpeg...\n${NC}"
 
 if [[ ! -e "./FFmpeg/ffmpeg" ]]; then
-    printf "${RED}\nFFmpeg binary not found. Script will not continue.\n"
+    printf "${RED}\nFFmpeg binary not found. Script will continue without it, but you should download the binaries for merging and remux support.\n"
     printf "\nPLEASE PUT YOUR FFMPEG BINARIES INSIDE OF THE FFMPEG FOLDER!!!!\n"
 
-    exit
+    #exit
 fi
 
 #Formatting
-printf "\n"
+printf "\n${NC}"
 echo "--------------------------------------------"
 
 printf "${GREEN}\nChecking if Downloads folder exists...\n\n"
 
 if [[ -e "Downloads/" ]]; then
-    printf "${GREEN}Downloads folder exists! Continuing along...\n\n"
+    printf "${GREEN}Downloads folder exists! Continuing along...\n"
 else
-    printf "${RED}Downloads folder does not exist, creating directory!\n\n"
+    printf "${RED}Downloads folder does not exist, creating directory!\n"
 
     if mkdir -p "Downloads"; then
-        printf "${GREEN}Downloads folder created successfully!\n\n"
+        printf "${GREEN}Downloads folder created successfully!\n"
     else
-        printf "${RED}Downloads folder unable to be created! Check if you have the right permissions for this folder!\n\n"
+        printf "${RED}Downloads folder unable to be created! Check if you have the right permissions for this folder!\n"
     fi
 fi
 
 while true; do
 
-#Formatting
-echo -e "${NC}[ Download Highest Quality MP4 Video ]"
-printf "\n"
+    #Formatting
+    printf "\n${NC}"
+    echo "--------------------------------------------"
+    printf "\n${NC}"
 
-#Enter your URL for Downloading
-echo -n -e "${NC}Enter URL: "
-read -r _URL
+    #Formatting
+    echo -e "${NC}[ Download Highest Quality MP4 Video ]"
+    printf "\n"
 
-#Formatting
-printf "\n"
+    #Enter your URL for Downloading
+    echo -n -e "${NC}Enter URL: "
+    read -r _URL
 
-./yt-dlp_linux $_URL -P "Downloads/" --ffmpeg-location "./FFmpeg/ffmpeg" -f bestvideo[ext=webm]+bestaudio[ext=m4a] --remux-video "mp4"
+    #Formatting
+    printf "\n"
 
-#Formatting
-printf "\n"
+    if [[ ! -e "./FFmpeg/ffmpeg" ]]; then
+        ./yt-dlp_linux $_URL -P "Downloads/" -f bestvideo[ext=webm]+bestaudio[ext=m4a]
+    else
+        ./yt-dlp_linux $_URL -P "Downloads/" --ffmpeg-location "./FFmpeg/ffmpeg" -f bestvideo[ext=webm]+bestaudio[ext=m4a] --remux-video "mp4"
+    fi
+
+
 
 done
 
